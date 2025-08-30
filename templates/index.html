@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="simulator-container">
+    <div class="header">
+        <h1 class="main-header">Financial Transaction Simulator AI</h1>
+        <p class="sub-header">Generate synthetic financial data with advanced fraud detection capabilities</p>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="left-panel">
+            <div class="card">
+                <h2 class="section-header">Simulation Parameters</h2>
+                
+                <form id="simulation-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="form-label" for="num_transactions">Number of Transactions</label>
+                        <input type="range" class="form-control" id="num_transactions" name="num_transactions" 
+                               min="100" max="10000" value="1000" step="100" oninput="updateValue('num_transactions', 'transactions-value')">
+                        <div class="value-display">
+                            <span id="transactions-value">1000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="fraud_percentage">Fraud Percentage</label>
+                        <input type="range" class="form-control" id="fraud_percentage" name="fraud_percentage" 
+                               min="0.1" max="10" value="2" step="0.1" oninput="updateValue('fraud_percentage', 'fraud-value')">
+                        <div class="value-display">
+                            <span id="fraud-value">2%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="time_range">Time Range</label>
+                        <select class="form-control" id="time_range" name="time_range">
+                            <option value="1 Day">1 Day</option>
+                            <option value="1 Week">1 Week</option>
+                            <option value="1 Month" selected>1 Month</option>
+                            <option value="3 Months">3 Months</option>
+                            <option value="6 Months">6 Months</option>
+                            <option value="1 Year">1 Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="transaction_type">Primary Transaction Type</label>
+                        <select class="form-control" id="transaction_type" name="transaction_type">
+                            <option value="Mixed" selected>Mixed</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Online">Online</option>
+                            <option value="Grocery">Grocery</option>
+                            <option value="Food">Food</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Services">Services</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                        </select>
+                    </div>
+                    
+                    
+                    
+                    <button type="submit" class="btn btn-generate">Generate Synthetic Data</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Generating synthetic data... This may take a few minutes.</p>
+            </div>
+
+            <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+
+            <div id="results" style="display: none;">
+                <div class="card">
+                    <h2 class="section-header">Transaction Overview</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value" id="total-transactions">0</div>
+                            <div class="metric-label">Total Transactions</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value" id="fraudulent-transactions">0</div>
+                            <div class="metric-label">Fraudulent</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value" id="total-amount">$0.00</div>
+                            <div class="metric-label">Total Amount</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value" id="avg-transaction">$0.00</div>
+                            <div class="metric-label">Avg. Transaction</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-header">Transaction Type Distribution</h2>
+                    <div id="category-distribution-chart" class="distribution-chart"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-header">Fraud Analysis</h2>
+                    <div id="fraud-by-category-chart" class="fraud-chart"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-header">Risk Patterns Detected</h2>
+                    <div id="risk-patterns" class="risk-patterns-grid"></div>
+                </div>
+
+                <div class="card">
+                    <h2 class="section-header">Sample Transactions</h2>
+                    <div class="table-container">
+                        <table class="table" id="sample-transactions">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Merchant</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="download-options">
+                        <button id="download-csv" class="btn btn-download">Download CSV</button>
+                        <button id="download-json" class="btn btn-download">Download JSON</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateValue(sliderId, valueId) {
+    const slider = document.getElementById(sliderId);
+    const valueDisplay = document.getElementById(valueId);
+    
+    if (sliderId === 'fraud_percentage') {
+        valueDisplay.textContent = slider.value + '%';
+    } else {
+        valueDisplay.textContent = slider.value;
+    }
+}
+</script>
+{% endblock %}
