@@ -26,7 +26,7 @@ body {
 }
 
 .simulator-container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -53,22 +53,17 @@ body {
 
 .content-wrapper {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 3fr;
     gap: 20px;
+    align-items: start;
 }
 
 .card {
     background-color: var(--card-background);
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     padding: 25px;
     margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .section-header {
@@ -96,24 +91,27 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 input[type="range"] {
-    height: 8px;
     -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
     background: var(--border-color);
     border-radius: 4px;
+    outline: none;
+    padding: 0;
 }
-
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
     background: var(--accent-color);
@@ -141,38 +139,32 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .btn-generate {
-    background: linear-gradient(135deg, var(--accent-color), #2980b9);
+    background: var(--accent-color);
     color: white;
     width: 100%;
     padding: 15px;
     font-size: 1.1rem;
 }
-
 .btn-generate:hover {
-    background: linear-gradient(135deg, #2980b9, var(--accent-color));
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    background: #2980b9;
 }
 
 .btn-download {
     background-color: var(--success-color);
     color: white;
 }
-
 .btn-download:hover {
     background-color: #219a52;
-    transform: translateY(-2px);
 }
 
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 20px;
 }
 
 .metric-card {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background: #f8f9fa;
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -192,12 +184,16 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: 500;
 }
 
+/* NEW STYLE FOR THE CHARTS GRID */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
 .distribution-chart, .fraud-chart {
     min-height: 250px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    margin-top: 15px;
 }
 
 .risk-patterns-grid {
@@ -224,40 +220,36 @@ input[type="range"]::-webkit-slider-thumb {
 
 .table-container {
     overflow-x: auto;
-    margin-bottom: 20px;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-size: 0.9rem;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    white-space: nowrap;
 }
 
 .table th {
     background-color: var(--primary-color);
     color: white;
-    padding: 12px 15px;
-    text-align: left;
 }
 
-.table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.table tr:nth-child(even) {
+.table tbody tr:nth-of-type(even) {
     background-color: #f8f9fa;
-}
-
-.table tr:hover {
-    background-color: #e3f2fd;
 }
 
 .download-options {
     display: flex;
     gap: 15px;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .loading {
@@ -292,6 +284,56 @@ input[type="range"]::-webkit-slider-thumb {
     border-left: 4px solid var(--danger-color);
 }
 
+.chart-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.chart-label {
+    width: 120px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+
+.chart-value {
+    background-color: var(--accent-color);
+    height: 25px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: white;
+    font-weight: 600;
+    min-width: 30px;
+    text-align: right;
+}
+
+.pie-chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pie-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.pie-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+
 /* Responsive design */
 @media (max-width: 1200px) {
     .content-wrapper {
@@ -303,70 +345,14 @@ input[type="range"]::-webkit-slider-thumb {
     }
 }
 
+@media (max-width: 992px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
-    .metrics-grid {
+    .metrics-grid, .risk-patterns-grid {
         grid-template-columns: 1fr;
     }
-    
-    .risk-patterns-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .main-header {
-        font-size: 2rem;
-    }
-    
-    .simulator-container {
-        padding: 10px;
-    }
-}
-
-/* Chart styles */
-.chart-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.chart-label {
-    width: 120px;
-    font-weight: 600;
-    color: var(--secondary-color);
-}
-
-.chart-value {
-    flex-grow: 1;
-    background-color: var(--accent-color);
-    height: 25px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    color: white;
-    font-weight: 600;
-}
-
-.chart-container {
-    margin-top: 20px;
-}
-
-.pie-chart-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.pie-legend-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.pie-color {
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    margin-right: 8px;
 }
